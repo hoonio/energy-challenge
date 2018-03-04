@@ -19,8 +19,9 @@ function calculateEnergyUsage(meterReadings) {
   // what if the first value is NaN too?
 
   for (var i=1; i<meterReadings.length; i++) {
-    var currentUsage = meterReadings[i].cumulative - lastReading;
-    if (isNaN(meterReadings[i].cumulative)) {
+    var thisReading = meterReadings[i].cumulative;
+    var currentUsage = thisReading - lastReading;
+    if (isNaN(thisReading) || (i+1<meterReadings.length && thisReading > meterReadings[i+1].cumulative)) {
       for (var j=i+1; j<meterReadings.length; j++) {
         if (!isNaN(meterReadings[j].cumulative)){
           currentUsage = (meterReadings[j].cumulative - lastReading)/(j-i+1);
