@@ -67,7 +67,23 @@ describe('Given a meter reading dataset', () => {
         },
       ];
 
-      const expectedEnergyUsage = ['TO BE EDITED'];
+      const expectedEnergyUsage = [
+        {
+          energyUsage: 50,
+          from: "2017-01-01",
+          to: "2017-02-01"
+        },
+        {
+          energyUsage: 30,
+          from: "2017-02-01",
+          to: "2017-03-01"
+        },
+        {
+          energyUsage: 60,
+          from: "2017-03-01",
+          to: "2017-04-01"
+        }
+      ];
 
       const calculatedEnergyUsage = energyUsageCalculator(meterReadings);
 
@@ -102,7 +118,7 @@ describe('Given a meter reading dataset', () => {
             readingDate: "2017-03-01",
           }
         ];
-  
+
         const expectedEnergyUsage = [
           {
             energyUsage: 50,
@@ -115,9 +131,9 @@ describe('Given a meter reading dataset', () => {
             to: "2017-03-01"
           }
         ];
-  
+
         const calculatedEnergyUsage = energyUsageCalculator(meterReadings);
-  
+
         expect(calculatedEnergyUsage).to.deep.equal(expectedEnergyUsage);
       });
 
@@ -149,11 +165,32 @@ describe('Given a meter reading dataset', () => {
             readingDate: "2017-05-01",
           },
         ];
-  
-        const expectedEnergyUsage = ['TO BE EDITED'];
-  
+
+        const expectedEnergyUsage = [
+        {
+          "energyUsage": 50,
+          "from": "2017-01-01",
+          "to": "2017-02-01"
+        },
+        {
+          "energyUsage": 50,
+          "from": "2017-02-01",
+          "to": "2017-03-01"
+        },
+        {
+          "energyUsage": 50,
+          "from": "2017-03-01",
+          "to": "2017-04-01"
+        },
+        {
+          "energyUsage": 60,
+          "from": "2017-04-01",
+          "to": "2017-05-01"
+        }
+       ];
+
         const calculatedEnergyUsage = energyUsageCalculator(meterReadings);
-  
+
         expect(calculatedEnergyUsage).to.deep.equal(expectedEnergyUsage);
       });
     });
@@ -187,7 +224,7 @@ describe('Given a meter reading dataset', () => {
             readingDate: "2017-03-01",
           }
         ];
-  
+
         const expectedEnergyUsage = [
           {
             energyUsage: 50,
@@ -200,9 +237,9 @@ describe('Given a meter reading dataset', () => {
             to: "2017-03-01"
           }
         ];
-  
+
         const calculatedEnergyUsage = energyUsageCalculator(meterReadings);
-  
+
         expect(calculatedEnergyUsage).to.deep.equal(expectedEnergyUsage);
       });
 
@@ -234,11 +271,15 @@ describe('Given a meter reading dataset', () => {
             readingDate: "2017-05-01",
           },
         ];
-  
-        const expectedEnergyUsage = ['TO BE EDITED'];
-  
+
+        const expectedEnergyUsage = [ { energyUsage: 30, from: '2017-01-01', to: '2017-02-01' },
+          { energyUsage: 30, from: '2017-02-01', to: '2017-03-01' },
+          { energyUsage: 30, from: '2017-03-01', to: '2017-04-01' },
+          { energyUsage: 150, from: '2017-04-01', to: '2017-05-01' }
+        ];
+
         const calculatedEnergyUsage = energyUsageCalculator(meterReadings);
-  
+
         expect(calculatedEnergyUsage).to.deep.equal(expectedEnergyUsage);
       });
     });
@@ -266,7 +307,7 @@ describe('Given a meter reading dataset', () => {
             readingDate: "2017-02-01",
           }
         ];
-  
+
         const expectedEnergyUsage = [
           {
             energyUsage: 60,
@@ -274,9 +315,9 @@ describe('Given a meter reading dataset', () => {
             to: "2017-02-01"
           }
         ];
-  
+
         const calculatedEnergyUsage = energyUsageCalculator(meterReadings);
-  
+
         expect(calculatedEnergyUsage).to.deep.equal(expectedEnergyUsage);
       });
 
