@@ -35,6 +35,7 @@ function calculateEnergyUsage(meterReadings) {
       else {
         // rollover case
         currentUsage = (thisReading - lastReading)+1000
+        lastReading -= 1000
       }
     }
 

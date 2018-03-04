@@ -350,7 +350,10 @@ describe('Given a meter reading dataset', () => {
           },
         ];
 
-        const expectedEnergyUsage = ['TO BE EDITED'];
+        const expectedEnergyUsage = [ { energyUsage: 70, from: '2017-01-01', to: '2017-02-01' },
+        { energyUsage: 60, from: '2017-02-01', to: '2017-03-01' },
+        { energyUsage: 60, from: '2017-03-01', to: '2017-04-01' },
+        { energyUsage: 60, from: '2017-04-01', to: '2017-05-01' } ];
 
         const calculatedEnergyUsage = energyUsageCalculator(meterReadings);
 
