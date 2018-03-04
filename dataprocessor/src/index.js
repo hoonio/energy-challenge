@@ -12,17 +12,28 @@ function calculateEnergyUsage(meterReadings) {
       * energyUsage: the energy usage over the calculated period
       * from and to: date range the energy usage is calculated on
   */
-  console.log(meterReadings)
   if (meterReadings.length < 2)
     return [];
   var calculatedEnergyUsage = [];
+  var lastReading = meterReadings[0].cumulative;
+  // what if the first value is NaN too?
 
   for (var i=1; i<meterReadings.length; i++) {
+    var currentUsage = meterReadings[i].cumulative - lastReading;
+    if (isNaN(meterReadings[i].cumulative)) {
+      for (var j=i+1; j<meterReadings.length; j++) {
+        if (!isNaN(meterReadings[j].cumulative)){
+          currentUsage = (meterReadings[j].cumulative - lastReading)/(j-i+1);
+          break;
+        }
+      }
+    }
     calculatedEnergyUsage.push({
-      energyUsage: meterReadings[i].cumulative - meterReadings[i-1].cumulative,
+      energyUsage: currentUsage,
       from: meterReadings[i-1].readingDate,
       to: meterReadings[i].readingDate
     })
+    lastReading += currentUsage;
   }
 
   return calculatedEnergyUsage;
