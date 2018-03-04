@@ -1,0 +1,15 @@
+{
+  "name": "meterreading-processing",
+  "version": "1.0.0",
+  "description": "Meter reading data processing",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha src/index.test.js",
+    "watch": "mocha --watch src/index.test.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.0.0"
+  }
+}
