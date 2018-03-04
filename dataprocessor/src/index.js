@@ -13,30 +13,31 @@ function calculateEnergyUsage(meterReadings) {
     var currentUsage = thisReading - lastReading;
     if (isNaN(thisReading)) {
       currentUsage = fixBadReading(meterReadings, i, lastReading);
-      // for (var j=i+1; j<meterReadings.length; j++) {
-      //   if (!isNaN(meterReadings[j].cumulative)){
-      //     currentUsage = (meterReadings[j].cumulative - lastReading)/(j-i+1);
-      //     break;
-      //   }
-      // }
     }
-    else if (thisReading < lastReading) {
-      var periodFixCount = 1;
-      for (var j=i-1; j>=0; j--){
-        if (meterReadings[j].cumulative > thisReading && meterReadings[j].quality == "Estimated"){
-          periodFixCount++;
+    else if (thisReading < lastReading){
+      if (meterReadings[i].quality == "Manual" && meterReadings[i-1].quality == "Estimated") {
+        var periodFixCount = 1;
+        for (var j=i-1; j>=0; j--){
+          if (meterReadings[j].cumulative > thisReading && meterReadings[j].quality == "Estimated"){
+            periodFixCount++;
+          }
+          else {
+            lastReading = meterReadings[j].cumulative;
+            break;
+          }
         }
-        else {
-          lastReading = meterReadings[j].cumulative;
-          break;
+        currentUsage = (thisReading - lastReading)/periodFixCount;
+        for (var j=i-periodFixCount; j<i-1; j++){
+          calculatedEnergyUsage[j].energyUsage = currentUsage;
+          lastReading += currentUsage;
         }
       }
-      currentUsage = (thisReading - lastReading)/periodFixCount;
-      for (var j=i-periodFixCount; j<i-1; j++){
-        calculatedEnergyUsage[j].energyUsage = currentUsage;
-        lastReading += currentUsage;
+      else {
+        // rollover case
+        currentUsage = (thisReading - lastReading)+1000
       }
     }
+
     calculatedEnergyUsage.push({
       energyUsage: currentUsage,
       from: meterReadings[i-1].readingDate,
@@ -44,7 +45,6 @@ function calculateEnergyUsage(meterReadings) {
     })
     lastReading += currentUsage;
   }
-  console.log(calculatedEnergyUsage)
   return calculatedEnergyUsage;
 }
 
